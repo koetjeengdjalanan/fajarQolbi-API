@@ -16,6 +16,6 @@ class Category extends Model
 
     public function blogPosts()
     {
-        return $this->hasMany(BlogPosts::class);
+        return $this->hasMany(BlogPost::class);
     }
 }

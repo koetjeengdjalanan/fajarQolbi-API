@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBlogPostRequest;
 use App\Http\Requests\UpdateBlogPostRequest;
+use App\Http\Resources\BlogPostResources;
 use App\Models\BlogPost;
 
 class BlogPostController extends Controller
@@ -15,7 +16,9 @@ class BlogPostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = BlogPost::all()->sortByDesc('published_at')->take(10)->values()->all();
+        return BlogPostResources::collection($posts);
+        // return BlogPost::all()->sortByDesc('p ublished_at')->take(10)->values()->all();
     }
 
     /**
@@ -47,7 +50,8 @@ class BlogPostController extends Controller
      */
     public function show(BlogPost $blogPost)
     {
-        //
+        // return new BlogPostResources($blogPost);
+        return $blogPost;
     }
 
     /**

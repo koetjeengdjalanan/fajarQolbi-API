@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\BlogPostController;
+use App\Http\Controllers\CategoryController;
+use App\Models\BlogPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('posts', [BlogPostController::class, 'index']);
+Route::get('posts/{id}', [BlogPostController::class, 'show{id}']);
+
+Route::get('categories', [CategoryController::class, 'index']);
