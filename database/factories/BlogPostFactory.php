@@ -22,7 +22,7 @@ class BlogPostFactory extends Factory
             'thumbnail' => $this->faker->imageUrl(397, 241, 'campus'),
             'created_at' => now()->addSecond(mt_rand(0, 9999999)),
             'updated_at' => now()->addSecond(mt_rand(0, 9999999)),
-            'published_at' => now()->addSecond(mt_rand(0, 9999999)),
+            'published_at' => BlogPostHelper::Published(mt_rand(0, 2)),
             'excerpt' => $this->faker->words(20, true),
             'body' => '<p>' . $this->faker->paragraph(5) . '</p><p>' . $this->faker->paragraph(5) . '</p><p>' . $this->faker->paragraph(5) . '</p><p>' . $this->faker->paragraph(5) . '</p>',
         ];
@@ -39,6 +39,16 @@ class BlogPostHelper
                 break;
             default:
                 return str_replace('-', ' ', $text);
+                break;
+        }
+    }
+    public function Published(int $input)
+    {
+        switch ($input) {
+            case 0:
+                return null;
+            default:
+                return now()->addSecond(mt_rand(0, 9999999));
                 break;
         }
     }

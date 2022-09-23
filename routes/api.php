@@ -17,11 +17,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+Route::get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/', [BlogPostController::class, 'index']);
 Route::get('posts', [BlogPostController::class, 'index']);
-Route::get('posts/{id}', [BlogPostController::class, 'show{id}']);
+Route::get('posts/{id}', [BlogPostController::class, 'show']);
 
 Route::get('categories', [CategoryController::class, 'index']);
+
+Route::get('test', function (Request $request) {
+    if ($request->has('tgl')) {
+        return $request->date('tgl');
+    }
+    return null;
+});

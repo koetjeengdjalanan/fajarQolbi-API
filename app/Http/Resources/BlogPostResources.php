@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BlogPostResources extends JsonResource
@@ -17,13 +18,18 @@ class BlogPostResources extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'author' => $this->user->name,
+            'author' => [
+                'id' => $this->user->id,
+                'name' =>  $this->user->name,
+            ],
             'category_id' => $this->category_id,
             'category' => $this->category->name,
             'slug' => $this->slug,
             'thumbnail' => $this->thumbnail,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'created_at' => Carbon::parse($this->created_at)->format('U'),
+            'updated_at' => Carbon::parse($this->updated_at)->format('U'),
+            'published_at' => Carbon::parse($this->published_at)->format('U'),
+            'published_formated' => $this->published_at,
             'excerpt' => $this->excerpt,
             'body' => $this->body,
         ];

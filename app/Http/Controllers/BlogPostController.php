@@ -6,6 +6,7 @@ use App\Http\Requests\StoreBlogPostRequest;
 use App\Http\Requests\UpdateBlogPostRequest;
 use App\Http\Resources\BlogPostResources;
 use App\Models\BlogPost;
+use Illuminate\Http\Request;
 
 class BlogPostController extends Controller
 {
@@ -14,10 +15,15 @@ class BlogPostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->has('id')) {
+            $query = BlogPost::findOrFail($request->input('id'));
+            return new BlogPostResources($query);
+        }
         $posts = BlogPost::all()->sortByDesc('published_at')->take(10)->values()->all();
         return BlogPostResources::collection($posts);
+        // return new BlogPostResources(BlogPost::paginate());
         // return BlogPost::all()->sortByDesc('p ublished_at')->take(10)->values()->all();
     }
 
@@ -48,10 +54,11 @@ class BlogPostController extends Controller
      * @param  \App\Models\BlogPost  $blogPost
      * @return \Illuminate\Http\Response
      */
-    public function show(BlogPost $blogPost)
+    public function show(BlogPost $blogPost, $id)
     {
         // return new BlogPostResources($blogPost);
-        return $blogPost;
+        $res = BlogPost::find($id);
+        return $res;
     }
 
     /**
