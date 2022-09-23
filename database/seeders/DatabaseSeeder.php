@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         User::create([
             'name' => 'The Watcher',
+            'username' => 'thewatcher',
             'status' => 1,
             'email' => 'super@admin.com',
             'email_verified_at' => now(),

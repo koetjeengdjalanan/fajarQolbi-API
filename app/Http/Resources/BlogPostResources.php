@@ -19,7 +19,7 @@ class BlogPostResources extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'author' => [
-                'id' => $this->user->id,
+                'username' => $this->user->username,
                 'name' =>  $this->user->name,
             ],
             'category_id' => $this->category_id,

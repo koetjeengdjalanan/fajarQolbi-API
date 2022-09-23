@@ -15,8 +15,10 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $naming = $this->faker->name();
         return [
-            'name' => $this->faker->name(),
+            'name' => Helper::Naming(0, $naming),
+            'username' => Helper::Naming(1, $naming),
             'status' => mt_rand(2, 4),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => Helper::emailVerRand(mt_rand(0, 1)),
@@ -51,6 +53,19 @@ class Helper
             default:
                 return now();
                 break;
+        }
+    }
+
+    public function Naming(int $input, string $name)
+    {
+        switch ($input) {
+            case 0:
+                return $name;
+            default:
+                if (strpos($name, '. ')) {
+                    return strtolower(str_replace(' ', '-', preg_replace('/[W]/', '', explode('. ', $name)[1])));
+                }
+                return strtolower(str_replace(' ', '-', preg_replace('/[W]/', '', $name)));
         }
     }
 }
